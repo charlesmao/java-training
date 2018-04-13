@@ -19,13 +19,13 @@ public class ZookeeperLockTest {
 
     //10秒内10万并发量
     private static final Integer MILLIS = 1000; //10s
-    private static final Integer REQUESTS = 10000; //10万
+    private static final Integer REQUESTS = 100; //10万
 
     //假设业务方法执行时间
     private static final Long EXECUTE_TIME = 100L; //毫秒
 
     //全局共享资源
-    private static Integer NUMBER = 0;
+    private static Integer STOCK = 90; //假设为1000的库存
 
 
 
@@ -47,7 +47,7 @@ public class ZookeeperLockTest {
         System.out.println(MILLIS/1000 + "秒内并发数并发数" + REQUESTS + "共花费时间：" + (end -start) + "毫秒");
 
 
-        System.out.println("执行后共享资源为：" + NUMBER);
+        System.out.println("执行后共享资源为：" + STOCK);
     }
 
     private static class BizThread extends Thread {
@@ -81,7 +81,7 @@ public class ZookeeperLockTest {
                 InterProcessMutex mutex = new InterProcessMutex(client, "/curator/lock");
                 //尝试获取锁，没有返回值，此位置获取锁失败时，会抛出一个异常
                 System.out.println(System.currentTimeMillis() + "-" + Thread.currentThread().getName() + "：尝试获取锁...");
-                //mutex.acquire();
+                mutex.acquire();
                 //尝试在设定的时间内获取锁，有返回值boolean
                 //mutex.acquire(3, TimeUnit.SECONDS);
                 System.out.println(System.currentTimeMillis() + "-" + Thread.currentThread().getName() + "：得到锁，开始执行业务代码...");
@@ -89,7 +89,7 @@ public class ZookeeperLockTest {
                 doSomething();
                 System.out.println(System.currentTimeMillis() + "-" + Thread.currentThread().getName() + "：业务代码执行结束,释放锁...");
                 //释放锁
-                //mutex.release();
+                mutex.release();
             } catch (Exception e) {
                 System.out.println(System.currentTimeMillis() + "-" + Thread.currentThread().getName() + "：发生异常...");
                 e.printStackTrace();
@@ -110,12 +110,32 @@ public class ZookeeperLockTest {
     private static void doSomething() {
 
         System.out.println(System.currentTimeMillis() + "-" + Thread.currentThread().getName() + "：执行业务代码...");
-        NUMBER += 1;
+
+        if (STOCK > 0) {
+            //额外操作
+            doeXtraSomething();
+            //扣减库存
+            STOCK--;
+            System.out.println(System.currentTimeMillis() + "-" + Thread.currentThread().getName() + "：扣减库存...");
+        }
+
+        System.out.println(System.currentTimeMillis() + "-" + Thread.currentThread().getName() + "：当前库存为" + STOCK);
+
         try {
             Thread.sleep(EXECUTE_TIME); //单位毫秒
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void doeXtraSomething() {
+
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
