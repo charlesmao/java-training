@@ -13,6 +13,7 @@
 		<module>java-training-parent</module>
 		<module>java-training-common</module>
         <module>java-training-spi</module>
+        <module>java-training-temp</module>
     </modules>
 
 
