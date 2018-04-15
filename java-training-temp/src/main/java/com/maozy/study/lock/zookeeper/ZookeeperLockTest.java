@@ -17,17 +17,17 @@ public class ZookeeperLockTest {
 
     //创建重试策略，第一个参数(baseSleepTimeMs)为每次获取客户端链接的间隔时间，第二个参数(maxRetries)为重试次数
     private static final RetryPolicy RETRY_POLICY = new ExponentialBackoffRetry(1000, 3);
-    private static final String CONNECT_STRING = "172.20.71.128:2181,172.20.71.185:2182,172.20.71.186:2183";
+    private static final String CONNECT_STRING = "192.168.20.120:2181,192.168.20.121:2182,192.168.20.123:2183";
 
-    //10秒内10万并发量
-    private static final Integer MILLIS = 1000; //10s
-    private static final Integer REQUESTS = 100; //10万
+    //MILLIS毫秒内REQUESTS并发量
+    private static final Integer MILLIS = 1000; //测试一定时间内的并发（毫秒）
+    private static final Integer REQUESTS = 5; //并发数
 
     //假设业务方法执行时间
-    private static final Long EXECUTE_TIME = 100L; //毫秒
+    private static final Long EXECUTE_TIME = 10000L; //毫秒
 
     //全局共享资源
-    private static Integer STOCK = 90; //假设为1000的库存
+    private static Integer STOCK = 80; //库存
 
 
 
@@ -46,10 +46,10 @@ public class ZookeeperLockTest {
 
         Long end = System.currentTimeMillis();
 
-        System.out.println(MILLIS/1000 + "秒内并发数并发数" + REQUESTS + "共花费时间：" + (end -start) + "毫秒");
+        System.out.println(MILLIS/1000 + "秒内并发数：" + REQUESTS + "，共花费时间：" + (end -start) + "毫秒");
 
 
-        System.out.println("执行后共享资源为：" + STOCK);
+        System.out.println("执行后库存为：" + STOCK);
     }
 
     private static class BizThread extends Thread {
@@ -67,7 +67,7 @@ public class ZookeeperLockTest {
 
             //模拟在10秒内1000个请求陆续发出
             Random random = new Random();
-            Long millis = (long)random.nextInt(MILLIS);
+            Long millis = (long)random.nextInt(MILLIS); //MILLIS毫秒内任意时间的请求
             try {
                 Thread.sleep(millis);
             } catch (InterruptedException e) {
@@ -77,6 +77,7 @@ public class ZookeeperLockTest {
             CuratorFramework client = null;
             try {
                 //创建zookeeper客户端(应加非空判断)
+                System.out.println(System.currentTimeMillis() + "-" + Thread.currentThread().getName() + ":创建客户端...");
                 client = CuratorFrameworkFactory.newClient(CONNECT_STRING, RETRY_POLICY);
                 client.start();
                 //创建分布式锁，锁空间的根节点为/curator/lock
@@ -98,8 +99,8 @@ public class ZookeeperLockTest {
             } finally {
                 if (client != null) {
                     //关闭客户端
-                    client.close();
                     System.out.println(System.currentTimeMillis() + "-" + Thread.currentThread().getName() + "：关闭客户端连接...");
+                    client.close();
                 }
 
                 //递减锁存器计算
@@ -118,7 +119,9 @@ public class ZookeeperLockTest {
             doeXtraSomething();
             //扣减库存
             STOCK--;
-            System.out.println(System.currentTimeMillis() + "-" + Thread.currentThread().getName() + "：扣减库存...");
+            System.out.println(System.currentTimeMillis() + "-" + Thread.currentThread().getName() + "：扣减库存成功...");
+        } else {
+            System.out.println(System.currentTimeMillis() + "-" + Thread.currentThread().getName() + "：扣减库存失败...");
         }
 
         System.out.println(System.currentTimeMillis() + "-" + Thread.currentThread().getName() + "：当前库存为" + STOCK);
