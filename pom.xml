@@ -14,7 +14,19 @@
 		<module>java-training-common</module>
         <module>java-training-spi</module>
         <module>java-training-temp</module>
+        <module>java-training-tomcat</module>
+        <module>java-training-myweb</module>
+        <module>java-training-web</module>
+        <module>java-training-https</module>
     </modules>
+
+    <repositories>
+        <repository>
+            <id>macula-repo</id>
+            <name>macula-repo</name>
+            <url>http://maven.infinitus.com.cn:8081/nexus/content/groups/public</url>
+        </repository>
+    </repositories>
 
 
 </project>
