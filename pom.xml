@@ -18,6 +18,7 @@
         <module>java-training-myweb</module>
         <module>java-training-web</module>
         <module>java-training-https</module>
+        <module>java-training-sample-rpc</module>
     </modules>
 
     <repositories>
