@@ -21,6 +21,10 @@
         <module>java-training-sample-rpc</module>
         <module>java-training-sample-nio</module>
         <module>java-training-design-pattern</module>
+        <module>java-sample-dubbo-pay-api</module>
+        <module>java-sample-dubbo-pay-provider</module>
+        <module>java-sample-dubbo-consumer</module>
+        <module>dubbo-demo</module>
     </modules>
 
     <repositories>
