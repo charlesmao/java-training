@@ -19,6 +19,8 @@
         <module>java-training-web</module>
         <module>java-training-https</module>
         <module>java-training-sample-rpc</module>
+        <module>java-training-sample-nio</module>
+        <module>java-training-design-pattern</module>
     </modules>
 
     <repositories>
