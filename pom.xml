@@ -25,6 +25,7 @@
         <module>java-sample-dubbo-pay-provider</module>
         <module>java-sample-dubbo-consumer</module>
         <module>dubbo-demo</module>
+        <module>httpClient-demo</module>
     </modules>
 
     <repositories>

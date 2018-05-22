@@ -21,6 +21,9 @@
         <jedis.version>2.9.0</jedis.version>
         <ons.client.version>1.2.7.Final</ons.client.version>
         <dubbo.version>2.5.3</dubbo.version>
+        <httpclient.version>4.5.2</httpclient.version>
+        <commons.lang3.version>3.3.2</commons.lang3.version>
+        <json.lib.version>2.2.3</json.lib.version>
     </properties>
 
     <dependencyManagement>
@@ -49,6 +52,21 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>dubbo</artifactId>
                 <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons.lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.json-lib</groupId>
+                <artifactId>json-lib</artifactId>
+                <version>${json.lib.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
