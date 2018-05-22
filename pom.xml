@@ -26,6 +26,7 @@
         <module>java-sample-dubbo-consumer</module>
         <module>dubbo-demo</module>
         <module>httpClient-demo</module>
+        <module>demo-springboot-cxf</module>
     </modules>
 
     <repositories>
