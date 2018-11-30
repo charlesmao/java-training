@@ -27,13 +27,17 @@
         <module>dubbo-demo</module>
         <module>httpClient-demo</module>
         <module>demo-springboot-cxf</module>
+        <module>java-training-concurrent</module>
+        <module>java-training-netty</module>
+        <module>java-training-jwt</module>
+        <module>springboot-swagger2-demo</module>
     </modules>
 
     <repositories>
         <repository>
-            <id>macula-repo</id>
-            <name>macula-repo</name>
-            <url>http://maven.infinitus.com.cn:8081/nexus/content/groups/public</url>
+            <id>nexus-aliyun</id>
+            <name>Nexus aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
         </repository>
     </repositories>
 

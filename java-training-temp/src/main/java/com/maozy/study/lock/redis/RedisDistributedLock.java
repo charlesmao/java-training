@@ -1,4 +1,4 @@
-package com.maozy.study.lock.optimistic.com.maozy.study.lock.redis;
+package com.maozy.study.lock.redis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
