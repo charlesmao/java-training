@@ -1,6 +1,7 @@
 package com.maozy.study.swagger;
 
 import com.google.common.collect.Sets;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -15,12 +16,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class Swagger2Config {
 
+    @Bean
     public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo())
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("用户组")
+                .apiInfo(apiInfo())
                 //不生效，有时间再研究
                 //.host("localhost:8080/api")
                 //.protocols(Sets.newHashSet("https", "http"))
-                .select().apis(RequestHandlerSelectors.basePackage("com.maozy.study.controller"))
+                .select().apis(RequestHandlerSelectors.basePackage("com.maozy.study.swagger.controller"))
                 .paths(PathSelectors.any()).build();
     }
 

@@ -1,11 +1,13 @@
 package com.maozy.study.swagger.entity;
 
+
 public class User {
 
     private Integer userId;
     private String username;
     private String password;
 
+    public User() {}
 
     public User(Integer userId, String username, String password) {
         this.userId = userId;
